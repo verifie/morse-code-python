@@ -71,19 +71,43 @@ def generate_beep(frequency, duration):
 # ========================================================================================
 # Morse code dictionary
 morse_code = {
-    'A': '.-', 'B': '-...', 'C': '-.-.', 'D': '-..', 'E': '.', 'F': '..-.',
-    'G': '--.', 'H': '....', 'I': '..', 'J': '.---', 'K': '-.-', 'L': '.-..',
-    'M': '--', 'N': '-.', 'O': '---', 'P': '.--.', 'Q': '--.-', 'R': '.-.',
-    'S': '...', 'T': '-', 'U': '..-', 'V': '...-', 'W': '.--', 'X': '-..-',
-    'Y': '-.--', 'Z': '--..', '0': '-----', '1': '.----', '2': '..---',
-    '3': '...--', '4': '....-', '5': '.....', '6': '-....', '7': '--...',
-    '8': '---..', '9': '----.', ' ': ' '
-}
-
-# ========================================================================================
-# Morse code timing dictionary
-morse_timing = {
-    '.': 1, '-': 3, ' ': 1
+    'A': '.-', 
+    'B': '-...', 
+    'C': '-.-.', 
+    'D': '-..', 
+    'E': '.', 
+    'F': '..-.',
+    'G': '--.', 
+    'H': '....', 
+    'I': '..', 
+    'J': '.---', 
+    'K': '-.-', 
+    'L': '.-..',
+    'M': '--', 
+    'N': '-.', 
+    'O': '---', 
+    'P': '.--.', 
+    'Q': '--.-', 
+    'R': '.-.',
+    'S': '...', 
+    'T': '-', 
+    'U': '..-', 
+    'V': '...-', 
+    'W': '.--', 
+    'X': '-..-',
+    'Y': '-.--', 
+    'Z': '--..', 
+    '0': '-----', 
+    '1': '.----', 
+    '2': '..---',
+    '3': '...--', 
+    '4': '....-', 
+    '5': '.....', 
+    '6': '-....', 
+    '7': '--...',
+    '8': '---..', 
+    '9': '----.', 
+    ' ': ' '
 }
 
 
@@ -113,17 +137,18 @@ def convert_to_morse(text):
 
     print(" ", end='', flush=True)
 
-    # Play out the morse code
+    # Play out the morse code - in audio and visual form
     for char in morse:
 
+        # Dot
         if char == '.':
             print(".", end='', flush=True) # Print the character, but stay on the same line for the next character
-            
             beep = generate_beep(pitch_frequency, dot_time)  # frequency, ms duration
             beep.play()
             # Keep the script running long enough for the sound to play
             time.sleep(dot_time/sleep_divide_time)
 
+        # Dash
         elif char == '-':
             print("-", end='', flush=True) # Print the character, but stay on the same line for the next character
             
@@ -131,12 +156,14 @@ def convert_to_morse(text):
             beep.play()
             time.sleep(dot_time/sleep_divide_time)
 
+        # Letter separation
         elif char == '|':
             print("|", end='', flush=True) # Print the character, but stay on the same line for the next character
             time.sleep((dot_time*2)/sleep_divide_time) 
             # Note we already add one pause after the letter, so we simply add 2 
             # more pauses to make it 3 pauses, compliant with a letter separation.
 
+        # Word separation
         elif char == ' ':
             time.sleep((dot_time*6)/sleep_divide_time)
             print(" ", end='', flush=True) # Print the character, but stay on the same line for the next character
